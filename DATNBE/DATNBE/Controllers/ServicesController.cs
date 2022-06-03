@@ -1,0 +1,69 @@
+﻿
+using DATNBE.DTOModel;
+using DATNBE.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+
+namespace DATNBE.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ServicesController : ControllerBase
+    {
+        private readonly IServices _services;
+        private readonly IRegister _register;
+        public ServicesController(IServices services, IRegister register)
+        {
+            _services = services;
+            _register = register;
+        }
+        [HttpPost("/api/register")] 
+        public IActionResult Reg ([FromBody]UserDTO user, IFormFile cert) 
+        {
+            _register.RegisterAccount(user,cert);
+            return Ok();
+        }
+
+
+        [HttpPost("/api/sign")]
+        public IActionResult Add( IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
+        {
+            _services.SavePDFFile(formFile1);
+            _services.SaveCertFile(formFile2);
+            _services.SaveHandWritting(formFile3);
+            string filePath = _services.Sign( formFile1,  formFile2,  formFile3);
+            string fileName = Path.GetFileName(filePath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "application/force-download", fileName);
+
+            
+        }
+
+        [HttpPost("/api/VerifySignature")]
+        public void VerifySignature (IFormFile formFile)
+        {
+            _services.SavePDFFile (formFile);
+            _services.VerifySignature(formFile);
+        }
+
+        [HttpPost("/api/encrypt")]
+        public IActionResult Encrypt(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
+        {
+            _services.SavePDFFile(formFile1);
+            _services.SaveCertFile(formFile2);
+            _services.SaveCertFile(formFile3);
+            _services.Encrypt(formFile1,formFile2,formFile3 );
+            string filePath = _services.Encrypt(formFile1, formFile2,formFile3);
+            string fileName = Path.GetFileName(filePath);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
+            return File(fileBytes, "application/force-download", fileName);
+        }
+
+        [HttpPost("/api/decrypt")]
+        public void Decrypt(UserDTO user, IFormFile cert)
+        {
+
+        }
+    }  
+}
