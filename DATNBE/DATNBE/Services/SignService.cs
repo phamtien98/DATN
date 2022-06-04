@@ -5,7 +5,7 @@ namespace DATNBE.Services
     public class SignService : IServices
     {
 
-        public string Sign(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
+        public string Sign(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3, string reason, string location)
         {
             BitMiracle.Docotic.LicenseManager.AddLicenseData("52Y92-XZ9EM-JKYA5-CJJBY-DX6LV");
             var path1 = Path.Combine("PDFFile", formFile1.FileName);
@@ -17,16 +17,16 @@ namespace DATNBE.Services
                 // Replace "keystore.p12" and "password" with your own .p12 or .pfx path and password.
                 // Without the change the sample will not work.
 
-                PdfSignatureField field = pdf.Pages[0].AddSignatureField(100, 100, 200, 50);
-                field.BackgroundColor = new PdfGrayColor(80);
+                PdfSignatureField field = pdf.Pages[0].AddSignatureField(20, 20, 100, 50);
+             //   field.BackgroundColor = new PdfGrayColor(80);
                 PdfSigningOptions options = new PdfSigningOptions(path2, "1")
                 {
                     DigestAlgorithm = PdfDigestAlgorithm.Sha256,
                     Format = PdfSignatureFormat.Pkcs7Detached,
                     Field = field,
-                    Reason = "Testing field styles",
-                    Location = "My workplace",
-                    ContactInfo = "support@example.com"
+                    Reason = reason,
+                    Location = location,
+                    ContactInfo = "support@example.com",
                 };
 
                 PdfSignatureAppearanceOptions appearance = options.Appearance;
@@ -39,9 +39,10 @@ namespace DATNBE.Services
                 appearance.FontColor = new PdfRgbColor(0, 0, 255);
                 appearance.TextAlignment = PdfSignatureTextAlignment.Left;
 
-                appearance.NameLabel = "Digital signiert von";
-                appearance.ReasonLabel = "Grund:";
-                appearance.LocationLabel = "Ort:";
+                appearance.NameLabel = "Signed by:";
+                appearance.ReasonLabel = "Reason:";
+                appearance.LocationLabel = "Local:";
+                appearance.IncludeDate = true;
                 var filePath = Path.Combine("SaveFile", formFile1.FileName.Substring(0, formFile1.FileName.LastIndexOf(".")) + ".signed.pdf");
                 pdf.SignAndSave(options, filePath);
                 return filePath;
@@ -161,9 +162,16 @@ namespace DATNBE.Services
 
             using (PdfDocument pdf = new PdfDocument(path1))
             {
-                var text = "Aes256Bit";
+
                 PdfPublicKeyEncryptionHandler handler = createEncryptionHandler(formFile2, formFile3);
                 handler.Algorithm = PdfEncryptionAlgorithm.Aes256Bit;
+                handler.Algorithm = PdfEncryptionAlgorithm.Aes128Bit;
+                handler.Algorithm = PdfEncryptionAlgorithm.Standard40Bit;
+                handler.Algorithm = PdfEncryptionAlgorithm.Standard128Bit;
+
+
+
+
 
                 var saveOptions = new PdfSaveOptions { EncryptionHandler = handler };
                 var pathToFile = Path.Combine("SaveFile", formFile1.FileName.Substring(0, formFile1.FileName.LastIndexOf(".")) + ".encrypted.pdf");

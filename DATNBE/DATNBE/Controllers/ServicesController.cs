@@ -18,12 +18,12 @@ namespace DATNBE.Controllers
             _services = services;
         }
         [HttpPost("/api/sign")]
-        public IActionResult Add( IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
+        public IActionResult Add( IFormFile formFile1, IFormFile formFile2, IFormFile formFile3, string reason, string location)
         {
             _services.SavePDFFile(formFile1);
             _services.SaveCertFile(formFile2);
             _services.SaveHandWritting(formFile3);
-            string filePath = _services.Sign( formFile1,  formFile2,  formFile3);
+            string filePath = _services.Sign( formFile1,  formFile2,  formFile3,reason,location);
             string fileName = Path.GetFileName(filePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
             return File(fileBytes, "application/force-download", fileName);
