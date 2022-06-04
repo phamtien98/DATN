@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bHHmARKpz3x//mAON36PjL0NBpsZQPkolSCryODm5iVv5n4FyRaYK5r28WdkXb8rEhBeG1VEV/5igqQwUYorYA==",
+  "dgSpecHash": "xbB2SR86GXPZnAW/dBIzGei++ON00MgV+Gwbs2mECaN21CyWrDO1j13B23/MGN+z4B2kU4FzRsiWxfVsh9Wncg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\minht\\source\\repos\\DATNBE\\DATNBE\\DATNBE.csproj",
+  "projectFilePath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\minht\\.nuget\\packages\\bitmiracle.docotic.pdf\\8.5.13147\\bitmiracle.docotic.pdf.8.5.13147.nupkg.sha512",
     "C:\\Users\\minht\\.nuget\\packages\\freespire.pdf\\8.2.0\\freespire.pdf.8.2.0.nupkg.sha512",

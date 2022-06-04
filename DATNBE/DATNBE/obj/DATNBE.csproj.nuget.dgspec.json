@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\minht\\source\\repos\\DATNBE\\DATNBE\\DATNBE.csproj": {}
+    "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\minht\\source\\repos\\DATNBE\\DATNBE\\DATNBE.csproj": {
+    "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\minht\\source\\repos\\DATNBE\\DATNBE\\DATNBE.csproj",
+        "projectUniqueName": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj",
         "projectName": "DATNBE",
-        "projectPath": "C:\\Users\\minht\\source\\repos\\DATNBE\\DATNBE\\DATNBE.csproj",
+        "projectPath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj",
         "packagesPath": "C:\\Users\\minht\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\minht\\source\\repos\\DATNBE\\DATNBE\\obj\\",
+        "outputPath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE\\DATNBE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\minht\\AppData\\Roaming\\NuGet\\NuGet.Config",
