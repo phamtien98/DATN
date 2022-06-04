@@ -12,20 +12,11 @@ namespace DATNBE.Controllers
     public class ServicesController : ControllerBase
     {
         private readonly IServices _services;
-        private readonly IRegister _register;
-        public ServicesController(IServices services, IRegister register)
+
+        public ServicesController(IServices services)
         {
             _services = services;
-            _register = register;
         }
-        [HttpPost("/api/register")] 
-        public IActionResult Reg ([FromBody]UserDTO user, IFormFile cert) 
-        {
-            _register.RegisterAccount(user,cert);
-            return Ok();
-        }
-
-
         [HttpPost("/api/sign")]
         public IActionResult Add( IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
         {

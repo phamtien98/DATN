@@ -1,4 +1,3 @@
-using DATNBE.Models;
 using DATNBE.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IServices, SignService>();
-builder.Services.AddScoped<IRegister, Register>();
-builder.Services.AddDbContext<DATNContext>(options => options.UseSqlServer("name=ConnectionStrings:Connection"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

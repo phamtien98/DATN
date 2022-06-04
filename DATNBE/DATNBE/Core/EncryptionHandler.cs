@@ -8,9 +8,9 @@ namespace DATNBE.Core
         {
 
 
-            string keyStoreOwner = Path.Combine("CertFile", DateTime.Now.ToString("yyyyMMddss") + formFile.FileName);
+            string keyStoreOwner = Path.Combine("CertFile" + formFile.FileName);
             string passwordOwner = "1";
-            string keyStoreUser = Path.Combine("CertFile", DateTime.Now.ToString("yyyyMMddss") + formFile1.FileName);
+            string keyStoreUser = Path.Combine("CertFile" + formFile1.FileName);
             string passwordUser = "1";
 
             PdfPublicKeyEncryptionHandler handler = new PdfPublicKeyEncryptionHandler(keyStoreOwner, passwordOwner);
