@@ -17,6 +17,7 @@ app.UseCors(options => options.AllowAnyOrigin()
                               .AllowAnyHeader()
                               .AllowAnyMethod()
                               .WithExposedHeaders("*")
+                          
 );
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

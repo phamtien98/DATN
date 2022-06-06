@@ -18,12 +18,12 @@ namespace DATNBE.Controllers
             _services = services;
         }
         [HttpPost("/api/sign")]
-        public IActionResult Add( IFormFile formFile1, IFormFile formFile2, IFormFile formFile3, string reason, string location)
+        public IActionResult Add(IFormFile pdfFile, IFormFile certFile, string password, IFormFile handwrittingFile, string name, string reason, string location)
         {
-            _services.SavePDFFile(formFile1);
-            _services.SaveCertFile(formFile2);
-            _services.SaveHandWritting(formFile3);
-            string filePath = _services.Sign( formFile1,  formFile2,  formFile3,reason,location);
+            _services.SavePDFFile(pdfFile);
+            _services.SaveCertFile(certFile);
+            _services.SaveHandWritting(handwrittingFile);
+            string filePath = _services.Sign( pdfFile,  certFile,password,  handwrittingFile,name,reason,location);
             string fileName = Path.GetFileName(filePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
             return File(fileBytes, "application/force-download", fileName);
@@ -32,20 +32,19 @@ namespace DATNBE.Controllers
         }
 
         [HttpPost("/api/VerifySignature")]
-        public void VerifySignature (IFormFile formFile)
+        public string VerifySignature (IFormFile pdfFile)
         {
-            _services.SavePDFFile (formFile);
-            _services.VerifySignature(formFile);
+            _services.SavePDFFile (pdfFile);
+            return  _services.VerifySignature(pdfFile);
         }
 
         [HttpPost("/api/encrypt")]
-        public IActionResult Encrypt(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
+        public IActionResult Encrypt(IFormFile pdfFile, IFormFile CertOwner, string passOwner, IFormFile CertUser, string passUser, int number)
         {
-            _services.SavePDFFile(formFile1);
-            _services.SaveCertFile(formFile2);
-            _services.SaveCertFile(formFile3);
-            _services.Encrypt(formFile1,formFile2,formFile3 );
-            string filePath = _services.Encrypt(formFile1, formFile2,formFile3);
+            _services.SavePDFFile(pdfFile);
+            _services.SaveCertFile(CertOwner);
+            _services.SaveCertFile(CertUser);
+            string filePath =  _services.Encrypt(pdfFile,CertOwner,passOwner,CertUser,passUser, number);
             string fileName = Path.GetFileName(filePath);
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
             return File(fileBytes, "application/force-download", fileName);

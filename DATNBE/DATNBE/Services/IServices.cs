@@ -4,8 +4,8 @@ namespace DATNBE.Services
 {
     public interface IServices
     {
-        string Sign(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3, string reason, string location);
-        string Encrypt(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3);
+        string Sign(IFormFile pdfFile, IFormFile certFile, string password, IFormFile handwrittingFile, string name, string reason, string location);
+        string Encrypt(IFormFile pdfFile, IFormFile CertOwner, string passOwner, IFormFile CertUser, string passUser, int number);
         string VerifySignature(IFormFile formFile1);
         void SavePDFFile(IFormFile formFile);
         void SaveCertFile(IFormFile formFile);

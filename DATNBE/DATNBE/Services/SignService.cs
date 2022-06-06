@@ -1,16 +1,17 @@
 ﻿using BitMiracle.Docotic.Pdf;
+using System.Text;
 
 namespace DATNBE.Services
 {
     public class SignService : IServices
     {
 
-        public string Sign(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3, string reason, string location)
+        public string Sign(IFormFile pdfFile, IFormFile certFile,string password, IFormFile handwrittingFile, string name, string reason, string location)
         {
             BitMiracle.Docotic.LicenseManager.AddLicenseData("52Y92-XZ9EM-JKYA5-CJJBY-DX6LV");
-            var path1 = Path.Combine("PDFFile", formFile1.FileName);
-            var path2 = Path.Combine("CertFile", formFile2.FileName);
-            var path3 = Path.Combine("HandWritting", formFile3.FileName);
+            var path1 = Path.Combine("PDFFile", pdfFile.FileName);
+            var path2 = Path.Combine("CertFile", certFile.FileName);
+            var path3 = Path.Combine("HandWritting", handwrittingFile.FileName);
             using (PdfDocument pdf = new PdfDocument(path1))
             {
                 // IMPORTANT:
@@ -18,13 +19,15 @@ namespace DATNBE.Services
                 // Without the change the sample will not work.
 
                 PdfSignatureField field = pdf.Pages[0].AddSignatureField(20, 20, 100, 50);
-             //   field.BackgroundColor = new PdfGrayColor(80);
-                PdfSigningOptions options = new PdfSigningOptions(path2, "1")
+                //   field.BackgroundColor = new PdfGrayColor(80);
+                PdfSigningOptions options = new PdfSigningOptions(path2, password)
                 {
+
                     DigestAlgorithm = PdfDigestAlgorithm.Sha256,
                     Format = PdfSignatureFormat.Pkcs7Detached,
                     Field = field,
                     Reason = reason,
+                    Creator = name,
                     Location = location,
                     ContactInfo = "support@example.com",
                 };
@@ -39,11 +42,11 @@ namespace DATNBE.Services
                 appearance.FontColor = new PdfRgbColor(0, 0, 255);
                 appearance.TextAlignment = PdfSignatureTextAlignment.Left;
 
-                appearance.NameLabel = "Signed by:";
+                appearance.IncludeName = true;
                 appearance.ReasonLabel = "Reason:";
                 appearance.LocationLabel = "Local:";
                 appearance.IncludeDate = true;
-                var filePath = Path.Combine("SaveFile", formFile1.FileName.Substring(0, formFile1.FileName.LastIndexOf(".")) + ".signed.pdf");
+                var filePath = Path.Combine("SaveFile", pdfFile.FileName.Substring(0, pdfFile.FileName.LastIndexOf(".")) + ".signed.pdf");
                 pdf.SignAndSave(options, filePath);
                 return filePath;
             }
@@ -154,39 +157,48 @@ namespace DATNBE.Services
             }
         }
 
-        public string Encrypt(IFormFile formFile1, IFormFile formFile2, IFormFile formFile3)
+        public string Encrypt(IFormFile pdfFile, IFormFile CertOwner,string passOwner, IFormFile CertUser,string passUser,int number)
         {
             BitMiracle.Docotic.LicenseManager.AddLicenseData("52Y92-XZ9EM-JKYA5-CJJBY-DX6LV");
 
-            var path1 = Path.Combine("PDFFile", formFile1.FileName);
+            var path1 = Path.Combine("PDFFile", pdfFile.FileName);
 
             using (PdfDocument pdf = new PdfDocument(path1))
             {
 
-                PdfPublicKeyEncryptionHandler handler = createEncryptionHandler(formFile2, formFile3);
-                handler.Algorithm = PdfEncryptionAlgorithm.Aes256Bit;
-                handler.Algorithm = PdfEncryptionAlgorithm.Aes128Bit;
-                handler.Algorithm = PdfEncryptionAlgorithm.Standard40Bit;
-                handler.Algorithm = PdfEncryptionAlgorithm.Standard128Bit;
-
-
-
-
+                PdfPublicKeyEncryptionHandler handler = createEncryptionHandler(pdfFile,passOwner, CertUser,passUser);
+                switch (number)
+                {
+                    case 1:
+                        handler.Algorithm = PdfEncryptionAlgorithm.Aes256Bit;
+                        break;
+                    case 2:
+                        handler.Algorithm = PdfEncryptionAlgorithm.Aes128Bit;
+                        break;
+                    case 3:
+                        handler.Algorithm = PdfEncryptionAlgorithm.Standard128Bit;
+                        break;
+                    case 4:
+                        handler.Algorithm = PdfEncryptionAlgorithm.Standard40Bit;
+                        break;
+                    default:
+                        break;
+                }
 
                 var saveOptions = new PdfSaveOptions { EncryptionHandler = handler };
-                var pathToFile = Path.Combine("SaveFile", formFile1.FileName.Substring(0, formFile1.FileName.LastIndexOf(".")) + ".encrypted.pdf");
+                var pathToFile = Path.Combine("SaveFile", pdfFile.FileName.Substring(0, pdfFile.FileName.LastIndexOf(".")) + ".encrypted.pdf");
                 pdf.Save(pathToFile, saveOptions);
                 return pathToFile;
             }
         }
 
-        private PdfPublicKeyEncryptionHandler createEncryptionHandler(IFormFile formFile, IFormFile formFile1)
+        private PdfPublicKeyEncryptionHandler createEncryptionHandler(IFormFile certOwner,string PassOwner, IFormFile certUser,string passUser)
         {
 
-            string keyStoreOwner = Path.Combine("CertFile", formFile.FileName);
-            string passwordOwner = "1";
-            string keyStoreUser = Path.Combine("CertFile", formFile1.FileName);
-            string passwordUser = "1";
+            string keyStoreOwner = Path.Combine("CertFile", certOwner.FileName);
+            string passwordOwner = PassOwner;
+            string keyStoreUser = Path.Combine("CertFile", certUser.FileName);
+            string passwordUser = passUser;
 
             PdfPublicKeyEncryptionHandler handler = new PdfPublicKeyEncryptionHandler(keyStoreOwner, passwordOwner);
 
@@ -198,65 +210,118 @@ namespace DATNBE.Services
             return handler;
         }
 
-        public string VerifySignature(IFormFile formFile1)
+        public string VerifySignature(IFormFile pdfFile)
         {
-            var path = Path.Combine("PDFFile", formFile1.FileName);
-            using (var pdf = new PdfDocument(path))
+            var path = Path.Combine("PDFFile", pdfFile.FileName);
+            StringBuilder sb = new StringBuilder();
+            using (PdfDocument pdf = new PdfDocument(path))
             {
                 PdfControl field = pdf.GetControls().FirstOrDefault(c => c.Type == PdfWidgetType.Signature);
                 if (field == null)
                 {
-                    Console.WriteLine("Document does not contain signature fields", "Verification result");
-                    return null;
+                   return "Document does not contain signature fields";
+
                 }
 
                 PdfSignature signature = ((PdfSignatureField)field).Signature;
                 PdfSignatureContents contents = signature.Contents;
-                Console.WriteLine("Signed part is intact: {0}", contents.VerifyDigest());
+                sb.AppendFormat("Signed part is intact: {0}\n", contents.VerifyDigest());
 
                 DateTime signingTime = signature.SigningTime ?? DateTime.MinValue;
-                Console.WriteLine("Signed on: {0}\n", signingTime.ToShortDateString());
+                sb.AppendFormat("Signed on: {0}\n", signingTime.ToShortDateString());
+
+                var timestampToken = contents.GetTimestampToken();
+                if (timestampToken != null)
+                {
+                    sb.AppendFormat("Embedded timestamp: {0}\n", timestampToken.GenerationTime);
+                    if (timestampToken.TimestampAuthority != null)
+                        sb.AppendFormat("Timestamp authority: {0}\n", timestampToken.TimestampAuthority.Name);
+                    sb.AppendFormat("Timestamp is intact: {0}\n\n", contents.VerifyTimestamp());
+                }
+                else
+                {
+                    sb.AppendLine();
+                }
 
                 if (contents.CheckHasEmbeddedOcsp())
                 {
-                    Console.WriteLine("Signature has OCSP embedded.");
-                    return checkRevocation(signature, PdfCertificateRevocationCheckMode.EmbeddedOcsp);
+                    sb.AppendLine("Signature has OCSP embedded.");
+                    checkRevocation(signature, sb, PdfCertificateRevocationCheckMode.EmbeddedOcsp);
                 }
 
                 if (contents.CheckHasEmbeddedCrl())
                 {
-                    Console.WriteLine("Signature has CRL embedded.");
-                    return checkRevocation(signature, PdfCertificateRevocationCheckMode.EmbeddedCrl);
+                    sb.AppendLine("Signature has CRL embedded.");
+                    checkRevocation(signature, sb, PdfCertificateRevocationCheckMode.EmbeddedCrl);
                 }
 
-                checkRevocation(signature, PdfCertificateRevocationCheckMode.OnlineOcsp);
-                checkRevocation(signature, PdfCertificateRevocationCheckMode.OnlineCrl);
+                checkRevocation(signature, sb, PdfCertificateRevocationCheckMode.OnlineOcsp);
+                checkRevocation(signature, sb, PdfCertificateRevocationCheckMode.OnlineCrl);
 
-                if (contents.Timestamp != null)
+                PdfControl control = pdf.GetControls().FirstOrDefault(c => c.Type == PdfWidgetType.Signature);
+                if (control == null)
                 {
-                    Console.WriteLine("Signature has timestamp embedded.");
-                    Console.WriteLine("Timestamp: {0}", contents.Timestamp);
-                    Console.WriteLine("Timestamp is intact: {0}", contents.VerifyTimestamp());
-                }
-            }
-            return null;
+                    return "Document does not contain signature fields";
 
+                }
+
+                PdfSignatureField field1 = (PdfSignatureField)control;
+                sb.AppendFormat("Signature field is invisible: {0}\n", isInvisible(field1));
+
+                PdfSignature signatur1e = field1.Signature;
+                sb.AppendFormat("Signed by: {0}\n", signature.Name);
+                sb.AppendFormat("Signing time: {0}\n", signature.SigningTime);
+                sb.AppendFormat("Signed at: {0}\n", signature.Location);
+                sb.AppendFormat("Reason for signing: {0}\n", signature.Reason);
+                sb.AppendFormat("Signer's contact: {0}\n", signature.ContactInfo);
+
+                PdfSignatureContents contents1 = signature.Contents;
+                sb.AppendFormat("Has OCSP embedded: {0}\n", contents.CheckHasEmbeddedOcsp());
+                sb.AppendFormat("Has CRL embedded: {0}\n", contents.CheckHasEmbeddedCrl());
+
+                PdfSignatureCertificate certificate = contents.GetSigningCertificate();
+                sb.AppendLine();
+                sb.AppendLine("== Signing certificate:");
+                sb.AppendFormat("Name: {0}\n", certificate.Name);
+                sb.AppendFormat("Algorithm: {0}\n", certificate.AlgorithmName);
+                sb.AppendFormat("Subject DN: {0}\n", certificate.Subject.Name);
+                sb.AppendFormat("Issuer DN: {0}\n", certificate.Issuer.Name);
+                sb.AppendFormat("Serial number: {0}\n", certificate.SerialNumber);
+                sb.AppendFormat("Valid from {0} up to {1}\n", certificate.ValidFrom, certificate.ValidUpto);
+                sb.AppendFormat("Timestamp Authority URL: {0}\n", certificate.GetTimestampAuthorityUrl());
+
+                PdfSignatureCertificate issuer = contents.GetIssuerCertificateFor(certificate);
+                sb.AppendLine();
+                sb.AppendLine("== Issuer certificate:");
+                sb.AppendFormat("Subject DN: {0}\n", issuer.Subject.Name);
+                sb.AppendFormat("Issuer DN: {0}\n", issuer.Issuer.Name);
+                sb.AppendFormat("Serial number: {0}\n", issuer.SerialNumber);
+
+            }
+            return sb.ToString();
 
         }
-        private static string checkRevocation(PdfSignature signature, PdfCertificateRevocationCheckMode mode)
+        private static bool isInvisible(PdfSignatureField field)
+        {
+            return (field.Width == 0 && field.Height == 0) ||
+                    field.Flags.HasFlag(PdfWidgetFlags.Hidden) ||
+                    field.Flags.HasFlag(PdfWidgetFlags.NoView);
+        }
+        private static string checkRevocation(PdfSignature signature, StringBuilder sb, PdfCertificateRevocationCheckMode mode)
         {
             PdfSignatureContents contents = signature.Contents;
             DateTime signingTime = signature.SigningTime ?? DateTime.MinValue;
 
-            var text = "";
             foreach (DateTime time in new DateTime[] { signingTime, DateTime.UtcNow })
             {
                 bool revoked = contents.CheckIfRevoked(mode, time);
                 string status = revoked ? "Revoked" : "Valid";
                 string date = time.ToShortDateString();
-                text = "Checking using {0} mode: {1} on {2}" + mode + status + date;
+                sb.AppendFormat("Checking using {0} mode: {1} on {2}\n", mode, status, date);
             }
-            return text;
+
+            sb.AppendLine();
+            return sb.ToString();
         }
     }
 }
