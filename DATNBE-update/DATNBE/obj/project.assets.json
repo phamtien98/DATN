@@ -7391,11 +7391,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj",
+      "projectUniqueName": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE\\DATNBE.csproj",
       "projectName": "DATNBE",
-      "projectPath": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATN\\DATNBE\\DATNBE\\DATNBE.csproj",
+      "projectPath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE\\DATNBE.csproj",
       "packagesPath": "C:\\Users\\minht\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATN\\DATNBE\\DATNBE\\obj\\",
+      "outputPath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\minht\\AppData\\Roaming\\NuGet\\NuGet.Config",
