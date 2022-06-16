@@ -1,0 +1,27 @@
+<!-- <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon">close</mat-icon>
+</button> -->
+<h1>Xác thực chữ ký</h1>
+
+<mat-divider></mat-divider>
+<div class="pt-3">
+    <form [formGroup]="IOForm" class="pt-toolbar">
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">File đã ký:</label>
+            <div class="col-sm-8">
+                <input type="file" class="form-control" formControlName="formFile" placeholder="File đã ký" (change)="onFileChange($event)" />
+            </div>
+        </div>
+        <div class="form-group row mx-0 pt-3 ">
+            <div class="col-12">
+                <button class="btn btn-sm btn-primary"  style="float: right;" (click)="onSubmit()" [mat-dialog-close]="true">
+                    <i class="far fa-save"></i>
+                    Xác thực
+                </button>
+                <button class="btn btn-sm btn-danger mr-3" [mat-dialog-close]="true">
+                    <i class="far fa-times-circle"></i> Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,67 @@
+<!-- <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon">close</mat-icon>
+</button> -->
+<h1>Mã hóa file PDF</h1>
+
+<mat-divider></mat-divider>
+<div class="pt-3">
+    <form [formGroup]="IOForm" class="pt-toolbar">
+        <div class="form-group row mx-0 p-1">
+          <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Chứng thư số của bạn:</label>
+            <div class="col-sm-8">
+                <input type="file" class="form-control" formControlName="CertOwner" placeholder="CertOwner" (change)="onFileChangeF3($event)" />
+            </div>
+        </div>
+            <label class="col-sm-4 col-form-label text-left">Mật Khẩu:</label>
+            <div class="col-sm-8">
+                <input class="form-control" type="password" formControlName="PassOwner" placeholder="Mật Khẩu" />
+            </div>
+        </div>
+
+        <div class="form-group row mx-0 p-1">
+          <label class="col-sm-4 col-form-label text-left">Chứng thư số của người nhận (định dạng cer):</label>
+          <div class="col-sm-8">
+              <input type="file" class="form-control" formControlName="CertUser" placeholder="CertUser" (change)="onFileChangeF2($event)" />
+          </div>
+      </div>
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left"> Thuật toán mã hóa: </label>
+                <mat-form-field appearance="fill" class="col-sm-8">
+                    <mat-label>Select an option</mat-label>
+                    <mat-select formControlName="Number">
+                      <mat-option value="1">AES256BIT</mat-option>
+                      <mat-option value="2">AES128BIT</mat-option>
+                      <mat-option value="3">Standra128BIT</mat-option>
+                      <mat-option value="4">Standra40BIT</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+        </div>
+
+
+
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Cho phép:</label>
+            <div class="col-sm-8">
+                <p><mat-checkbox formControlName="AllowEverything">Tất cả</mat-checkbox></p>
+                <p><mat-checkbox formControlName="AssembleDocument">Chèn,Xóa,Xoay trang</mat-checkbox></p>
+                <p><mat-checkbox formControlName="CopyContents">Copy</mat-checkbox></p>
+                <p><mat-checkbox formControlName="ExtractContents">Trích Xuất</mat-checkbox></p>
+                <p><mat-checkbox formControlName="ModifyContents">Chỉnh sửa</mat-checkbox></p>
+                <p><mat-checkbox formControlName="PrintDocument">In </mat-checkbox></p>
+                <p><mat-checkbox formControlName="PrintFaithfulCopy">PrintFaithfulCopy</mat-checkbox></p>
+            </div>
+        </div>
+        <div class="form-group row mx-0 pt-3 ">
+            <div class="col-12">
+                <button class="btn btn-sm btn-primary"  style="float: right;" (click)="onSubmit()" [mat-dialog-close]="false">
+                    <i class="far fa-save"></i>
+                    Mã Hóa
+                </button>
+                <button class="btn btn-sm btn-danger mr-3" [mat-dialog-close]="true">
+                    <i class="far fa-times-circle"></i> Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,56 @@
+<div class="content">
+
+  <!-- Top navbar -->
+  <mat-toolbar class="navbar" color="primary">
+
+    <a class="navbar-brand" [routerLink]="['/']" matTooltip="Home" style="color: white;">
+      <h1>
+        PDF SIGNER PRO
+      </h1>
+    </a>
+    <mat-icon>home</mat-icon>
+  </mat-toolbar>
+
+  <div class="container pt-4">
+    <!-- Upload -->
+    <div class="upload-button">
+
+      <label class="font-weight-bold">Tải lên tệp PDF của bạn</label>
+
+      <input class="form-control" id="file-input" type="file" (change)="onFileSelected($event)">
+      <!-- <button class="btn btn-primary mt-2">Process</button> -->
+    </div>
+
+    <!-- Viewer -->
+    <div id="outerContainer" class="p-2">
+      <div class="pdf-container">
+        <pdf-viewer
+          [src]="src"
+          [rotation]="0"
+          [original-size]="false"
+          [show-all]="true"
+          [fit-to-page]="false"
+          [zoom]="1"
+          [zoom-scale]="'page-width'"
+          [stick-to-page]="false"
+          [render-text]="true"
+          [external-link-target]="'blank'"
+          [autoresize]="true"
+          [show-borders]="false"
+          style="width: 100%; height: 72vh;"
+        ></pdf-viewer>
+      </div>
+    </div>
+
+    <!-- Chức năng -->
+    <div class="pt-2 functional-button">
+      <button mat-flat-button color="primary" (click)="sign()">Sign</button>
+      <button mat-flat-button color="accent" (click)="verify()">Verify</button>
+      <button mat-flat-button (click)="encrypt()">Encrypt</button>
+      <button mat-flat-button color="warn" (click)="decrypt()">Decrypt</button>
+    </div>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>

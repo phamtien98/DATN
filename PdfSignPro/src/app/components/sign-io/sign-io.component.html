@@ -1,0 +1,60 @@
+<!-- <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon">close</mat-icon>
+</button> -->
+<h1>Bắt đầu thực hiện ký số</h1>
+
+<mat-divider></mat-divider>
+<div class="pt-3">
+    <form [formGroup]="IOForm" class="pt-toolbar">
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Tên:</label>
+            <div class="col-sm-8">
+                <input class="form-control" formControlName="name" placeholder="Name" />
+            </div>
+        </div>
+
+        <div class="form-group row mx-0 p-1">
+          <label class="col-sm-4 col-form-label text-left">Chứng thư số:</label>
+          <div class="col-sm-8">
+              <input type="file" class="form-control" formControlName="file2" placeholder="Certificate" (change)="onFileChangeF2($event)" />
+          </div>
+      </div>
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Mật khẩu:</label>
+            <div class="col-sm-8">
+                <input class="form-control" type ="password" formControlName="password" placeholder="Password" />
+            </div>
+        </div>
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Lý do ký:</label>
+            <div class="col-sm-8">
+                <input class="form-control" formControlName="reason" placeholder="Reason" />
+            </div>
+        </div>
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Vị Trí:</label>
+            <div class="col-sm-8">
+                <input class="form-control" formControlName="location" placeholder="Location" />
+            </div>
+        </div>
+
+
+        <div class="form-group row mx-0 p-1">
+            <label class="col-sm-4 col-form-label text-left">Chữ ký:</label>
+            <div class="col-sm-8">
+                <input type="file" class="form-control" formControlName="file3" placeholder="Chữ ký" (change)="onFileChangeF3($event)" />
+            </div>
+        </div>
+        <div class="form-group row mx-0 pt-3 ">
+            <div class="col-12">
+                <button class="btn btn-sm btn-primary"  style="float: right;" (click)="onSubmit()" [mat-dialog-close]="true">
+                    <i class="far fa-save"></i>
+                    Thực hiện Ký
+                </button>
+                <button class="btn btn-sm btn-danger mr-3" [mat-dialog-close]="true">
+                    <i class="far fa-times-circle"></i> Hủy bỏ
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
