@@ -15,7 +15,7 @@ export class VerifyIoComponent implements OnInit {
 
   IOForm: FormGroup;
   dataModel: any;
-
+  content: any;
   // ctor
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +28,9 @@ export class VerifyIoComponent implements OnInit {
   // onInit
   ngOnInit() {
     this.bindingConfigValidation();
-    console.log(this.data);
+
+    this.content = this.data.model.split("\r\n");
+    console.log(this.content);
   }
 
   // config input validation form

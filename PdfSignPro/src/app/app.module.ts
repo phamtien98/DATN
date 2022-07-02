@@ -22,6 +22,7 @@ import { EncryptIoComponent } from './components/encrypt-io/encrypt-io.component
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSelectModule} from '@angular/material/select';
 import { DecryptIoComponent } from './components/decrypt-io/decrypt-io.component';
+import {MatListModule} from '@angular/material/list';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { DecryptIoComponent } from './components/decrypt-io/decrypt-io.component
     HttpClientModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    MatListModule
   ],
   providers: [
     MatdialogService

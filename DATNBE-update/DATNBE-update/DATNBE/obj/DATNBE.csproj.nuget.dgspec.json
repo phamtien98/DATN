@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\minht\\OneDrive\\Máy tính\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj": {}
+    "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\minht\\OneDrive\\Máy tính\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj": {
+    "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj",
+        "projectUniqueName": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj",
         "projectName": "DATNBE",
-        "projectPath": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj",
+        "projectPath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj",
         "packagesPath": "C:\\Users\\minht\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATNBE-update\\DATNBE-update\\DATNBE\\obj\\",
+        "outputPath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE-update\\DATNBE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\minht\\AppData\\Roaming\\NuGet\\NuGet.Config",

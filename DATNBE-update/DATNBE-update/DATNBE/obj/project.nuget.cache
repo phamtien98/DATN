@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2Km8DjIJxoxf2b+Wdq6wJcYqDrVsQIUqCb6A5fhP7e/5b4chUhOlzlzQPRQxBD2rSO04puM2JDtaPqJA90+67g==",
+  "dgSpecHash": "M+CHpm1iQLHg+YKrLGgnYf1eys1sUY9u7O9KG2Gt/YKcngBR4Qh/ccwb3vJ36NgLz5LLQYkf7TOb3Z7XdIDGiw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\minht\\OneDrive\\Máy tính\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj",
+  "projectFilePath": "C:\\Users\\minht\\OneDrive\\Tài liệu\\GitHub\\DATN\\DATNBE-update\\DATNBE-update\\DATNBE\\DATNBE.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\minht\\.nuget\\packages\\bitmiracle.docotic.pdf\\8.5.13147\\bitmiracle.docotic.pdf.8.5.13147.nupkg.sha512",
     "C:\\Users\\minht\\.nuget\\packages\\freespire.pdf\\8.2.0\\freespire.pdf.8.2.0.nupkg.sha512",

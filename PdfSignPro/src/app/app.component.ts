@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 import { DecryptIoComponent } from './components/decrypt-io/decrypt-io.component';
 import { EncryptIoComponent } from './components/encrypt-io/encrypt-io.component';
 import { SignIoComponent } from './components/sign-io/sign-io.component';
@@ -22,7 +24,8 @@ export class AppComponent {
    *
    */
   constructor(private imDialog: MatDialog,
-    public imDialogService: MatdialogService) {
+    public imDialogService: MatdialogService,
+    private http: HttpClient,) {
 
     this.mDialog = imDialogService;
     this.mDialog.initDialg(imDialog);
@@ -38,17 +41,25 @@ export class AppComponent {
 
   // xác thực chữ ký
   public verify() {
-    this.mDialog.setDialog(
-      this,
-      VerifyIoComponent,
-      "",
-      "",
-      "",
-      "50%",
-      "30vh",
-      1
-    );
-    this.mDialog.open();
+
+    let url = environment.url + "VerifySignature";
+
+    const formData = new FormData();
+    formData.append('formFile', this.filePdf);
+
+    this.http.post(url, formData).subscribe((res: any) => {
+      this.mDialog.setDialog(
+        this,
+        VerifyIoComponent,
+        "",
+        "",
+        res.message,
+        "50%",
+        "60vh",
+        1
+      );
+      this.mDialog.open();
+    });
   }
 
   // mã hóa file

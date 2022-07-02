@@ -134,7 +134,7 @@ namespace DATNBE.Services
             }
             ///
 
-            sb.AppendLine("Has" + signatures.Count + " signatures");
+            sb.AppendLine("Has " + signatures.Count + " signature");
             //     PdfSignature signatureOne = signatures[0];
             for (int i = 0; i < signatures.Count; i++)
             {
@@ -142,7 +142,8 @@ namespace DATNBE.Services
 
                 try
                 {
-                    bool bSignature = signatureOne.VerifySignature();
+                        bool modified = signatureOne.VerifyDocModified();
+                        bool bSignature = signatureOne.VerifySignature();
                     //bool checkModified = signatureOne.VerifyDocModified();
 
                     //if (checkModified)
@@ -153,6 +154,14 @@ namespace DATNBE.Services
                     //{
                     //    Console.WriteLine("Not change");
                     //}
+                    if (modified)
+                        {
+                           sb.AppendLine("The document was modified");
+                        }
+                    else {
+                            sb.AppendLine("The document was not modified");
+                            
+                       }
                     if (bSignature)
                     {
                         X509Certificate2 certificate = signatureOne.Certificate as X509Certificate2;
@@ -160,9 +169,9 @@ namespace DATNBE.Services
                         DateTime date = signatureOne.Date;
                         string subject = certificate.GetIssuerName();
 
-                        sb.AppendLine("The signature " + (i + 1) + " is visiable");
-                        sb.AppendLine("Signature info:");
-                        sb.AppendLine("signed by:" + signatureOne.Certificate.GetNameInfo(X509NameType.SimpleName, true));
+                        sb.AppendLine("The signature " +  (i + 1) + " is visiable");
+                        sb.AppendLine("==========Signature info=================");
+                        sb.AppendLine("Signed by:" + signatureOne.Certificate.GetNameInfo(X509NameType.SimpleName, true));
                         sb.AppendLine("Reason:" + signatureOne.Reason);
                         sb.AppendLine("Location:" + signatureOne.LocationInfo);
                         sb.AppendLine("Time signing:" + date);
@@ -174,6 +183,7 @@ namespace DATNBE.Services
                         sb.AppendLine("The signature"+ (i+1)+"is invisible");
 
                     }
+                    
 
                 }
                 catch (Exception ex)
